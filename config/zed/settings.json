@@ -1,0 +1,79 @@
+// ============================================================================
+// Zed settings.json template  (C/C++ development on Windows + xmake)
+// ----------------------------------------------------------------------------
+// Copy the relevant blocks into your own settings.json at:
+//    Windows:  %APPDATA%\Zed\settings.json      (C:\Users\<you>\AppData\Roaming\Zed)
+//    macOS:    ~/.config/zed/settings.json
+//    Linux:    ~/.config/zed/settings.json
+//
+// The C / clangd pieces are the important part for this guide. Everything else
+// (theme / font / keybindings) is personal taste — adjust or delete freely.
+// Do NOT commit real tokens/paths; keep placeholders like <your_libhv_path>.
+// ============================================================================
+{
+    // ---- Appearance (personal taste) --------------------------------------
+    "theme": {
+        "mode": "system",
+        "dark": "Catppuccin Macchiato (Blur) [Heavy]",
+        "light": "Catppuccin Latte (Blur) [Light]"
+    },
+    "icon_theme": "Material Icon Theme",
+    "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+    "buffer_font_size": 15,
+    "ui_font_family": "JetBrainsMono Nerd Font Mono",
+    "ui_font_size": 16,
+
+    // ---- Diagnostics display ----------------------------------------------
+    "diagnostics_max_severity": "hint",
+    "diagnostics": {
+        "button": true,
+        "include_warnings": true,
+        "inline": { "enabled": true, "padding": 4, "update_debounce_ms": 200 }
+    },
+    "inlay_hints": {
+        "enabled": true,
+        "show_type_hints": true,
+        "show_parameter_hints": true,
+        "show_other_hints": true,
+        "toggle_on_modifiers_press": { "control": true }
+    },
+
+    // ---- C / C++ -----------------------------------------------------------
+    "languages": {
+        "C": {
+            "format_on_save": "on",
+            "formatter": {
+                "external": {
+                    "command": "clang-format",
+                    "arguments": ["--style=file", "--assume-filename={buffer_path}"]
+                }
+            }
+        },
+        "C++": {
+            "format_on_save": "on",
+            "formatter": {
+                "external": {
+                    "command": "clang-format",
+                    "arguments": ["--style=file", "--assume-filename={buffer_path}"]
+                }
+            }
+        }
+    },
+
+    // ---- clangd ------------------------------------------------------------
+    // clangd is resolution-driven by compile_commands.json (see docs/xmake-clangd.md).
+    // Once your xmake build auto-generates compile_commands.json (see
+    // templates/clangd_export.lua) clangd automatically detects MSVC and finds
+    // every -I include dir, so you normally need NO special clangd knobs here.
+    //
+    // Optional: point clangd at the database explicitly and whitelist the cl.exe
+    // driver so MSVC detection is bulletproof even without a database:
+    "lsp": {
+        "clangd": {
+            "arguments": [
+                "--compile-commands-dir=.",
+                "--query-driver=C:\\<path-to-VS>\\VC\\Tools\\MSVC\\*\\bin\\Hostx64\\x64\\cl.exe"
+            ]
+        }
+    }
+}

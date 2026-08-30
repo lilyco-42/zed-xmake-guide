@@ -1,0 +1,8 @@
+# build artifacts (if you init a project inside this repo)
+build/
+compile_commands.json
+.xmake/
+
+# editor / OS
+.DS_Store
+Thumbs.db
